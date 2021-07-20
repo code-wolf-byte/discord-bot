@@ -48,9 +48,11 @@ async def news(ctx):
         print(news)
         head=[]
         desc=[]
+        url=[]
         for new in news['articles']:
               head.append(str(new['title']))
               desc.append(str(new['description']))
+              url.append(str(new['url']))
         roles = member.roles
         roles.reverse()
         top_role = roles[0]
@@ -60,8 +62,9 @@ async def news(ctx):
         if n>10:
                 n=9
         for i in range(0,n):
-                embed.add_field(name=head[i], value=desc[i], inline=True)
+                embed.add_field(name=head[i], value=desc[i], url=url[i], inline=True)
         await ctx.channel.send(embed=embed)
+
 
 @slash.slash(name="embed", guild_ids=guild_ids)
 async def em(ctx):
