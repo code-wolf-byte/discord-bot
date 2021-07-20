@@ -1,9 +1,11 @@
 import discord
 from discord.ext import commands
-import json
+from discord_slash import SlashCommand
 import requests
-client = commands.Bot(command_prefix='$')
 
+client = commands.Bot(command_prefix='$')
+slash = SlashCommand(client, sync_commands=True)
+guild_ids = [722437023981633546]
 @client.event
 async def on_ready():
         print(f"[!] Initializing...")
@@ -17,7 +19,6 @@ async def embed(ctx):
         message = ctx.message.content
         member=ctx.message.author
         name=''
-
         message = message.replace('$embed', '')
         if ctx.message.author.nick != None:
                 name = ctx.message.author.nick
@@ -61,6 +62,27 @@ async def news(ctx):
         for i in range(0,n):
                 embed.add_field(name=head[i], value=desc[i], inline=True)
         await ctx.channel.send(embed=embed)
+
+@slash.slash(name="embed", guild_ids=guild_ids)
+async def em(ctx):
+        msg = ctx.message
+        message = ctx.message.content
+        member = ctx.message.author
+        name = ''
+
+        message = message.replace('$embed', '')
+        if ctx.message.author.nick != None:
+                name = ctx.message.author.nick
+        else:
+                name = ctx.message.author.name
+        await msg.delete()
+        roles = member.roles
+        roles.reverse()
+        top_role = roles[0]
+        print(type(top_role.color))
+        emb = discord.Embed(description=message, colour=top_role.color)
+        emb.set_author(name=name, icon_url=ctx.message.author.avatar_url)
+        await ctx.channel.send(embed=emb)
 
 client.run('ODY2NzQxNDY2MDU5MTEyNDc4.YPW95A.wOOwOu5erlaF4hxHMdDKH9zPcXc')
 
