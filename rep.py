@@ -20,7 +20,7 @@ class User(commands.Cog):
     async def on_message(self,message):
         server= message.author.guild
         print(message.content)
-        if (time.time()-self.time_var)>15:
+        if (time.time()-self.time_var)>900:
             self.time_var=time.time()
             msg = self.get_quote()
             emb = discord.Embed(title='A word from the wise',description=msg,colour=discord.Colour.random())
