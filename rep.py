@@ -24,7 +24,7 @@ class User(commands.Cog):
             self.time_var=time.time()
             msg = self.get_quote()
             emb = discord.Embed(title='A word from the wise',description=msg,colour=discord.Colour.random())
-            channel= discord.utils.get(server.channels, name='general')
+            channel= discord.utils.get(server.channels, name='motivations')
             await channel.send(embed=emb)
     
     @commands.command()
