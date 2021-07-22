@@ -1,5 +1,5 @@
 from discord.ext import commands
-from welcome import User
+from rep import User
 
 client = commands.Bot(command_prefix='$')
 
